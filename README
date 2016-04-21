@@ -2,8 +2,8 @@ Important! See the WARNING file.
 
 eeprog reads and writes 24Cxx EEPROMs connected to I2C serial bus.
 
-It uses the SMBus protocol used by most of the recent chipsets. Don't forget to load
-your i2c chipset and the i2c-dev drivers.
+It uses the SMBus protocol used by most of the recent chipsets. Don't
+forget to load your i2c chipset and the i2c-dev drivers.
 
 Use -8 switch for EEPROM smaller then 24C16 (8bit addressing mode).
 
