@@ -72,7 +72,7 @@ int eeprom_open(char *dev_fqn, int addr, int type, struct eeprom* e)
 	int funcs, fd, r;
 	e->fd = e->addr = 0;
 	e->dev = 0;
-	
+
 	fd = open(dev_fqn, O_RDWR);
 	if(fd <= 0)
 	{
@@ -87,7 +87,7 @@ int eeprom_open(char *dev_fqn, int addr, int type, struct eeprom* e)
 		return -1;
 	}
 
-	
+
 	// check for req funcs
 	CHECK_I2C_FUNC( funcs, I2C_FUNC_SMBUS_READ_BYTE );
 	CHECK_I2C_FUNC( funcs, I2C_FUNC_SMBUS_WRITE_BYTE );
@@ -179,10 +179,10 @@ int eeprom_write_byte(struct eeprom *e, __u16 mem_addr, __u8 data)
 		__u8 buf[2] = { mem_addr & 0x00ff, data };
 		return i2c_write_2b(e, buf);
 	} else if(e->type == EEPROM_TYPE_16BIT_ADDR) {
-		__u8 buf[3] = 
+		__u8 buf[3] =
 			{ (mem_addr >> 8) & 0x00ff, mem_addr & 0x00ff, data };
 		return i2c_write_3b(e, buf);
-	} 
+	}
 	fprintf(stderr, "ERR: unknown eeprom type\n");
 	return -1;
 }
