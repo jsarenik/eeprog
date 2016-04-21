@@ -2,6 +2,9 @@
     copyright            : (C) by 2003-2004 Stefano Barbato
     email                : stefano@codesink.org
 
+    Copyright (C) 2011 by Kris Rusocki <kszysiu@gmail.com>
+    - support for user-defined write cycle time
+
     $Id: 24cXX.c,v 1.5 2004/02/29 11:05:28 tat Exp $
  ***************************************************************************/
 
@@ -67,7 +70,7 @@ static int i2c_write_3b(struct eeprom *e, __u8 buf[3])
 		exit(1); } \
 	} while(0);
 
-int eeprom_open(char *dev_fqn, int addr, int type, struct eeprom* e)
+int eeprom_open(char *dev_fqn, int addr, int type, int write_cycle_time, struct eeprom* e)
 {
 	int funcs, fd, r;
 	e->fd = e->addr = 0;
@@ -106,6 +109,7 @@ int eeprom_open(char *dev_fqn, int addr, int type, struct eeprom* e)
 	e->addr = addr;
 	e->dev = dev_fqn;
 	e->type = type;
+	e->write_cycle_time = write_cycle_time;
 	return 0;
 }
 
@@ -175,13 +179,23 @@ int eeprom_read_byte(struct eeprom* e, __u16 mem_addr)
 
 int eeprom_write_byte(struct eeprom *e, __u16 mem_addr, __u8 data)
 {
+	int ret;
+
 	if(e->type == EEPROM_TYPE_8BIT_ADDR) {
 		__u8 buf[2] = { mem_addr & 0x00ff, data };
-		return i2c_write_2b(e, buf);
+		ret = i2c_write_2b(e, buf);
+		if (ret == 0 && e->write_cycle_time != 0) {
+			usleep(1000 * e->write_cycle_time);
+		}
+		return ret;
 	} else if(e->type == EEPROM_TYPE_16BIT_ADDR) {
 		__u8 buf[3] =
 			{ (mem_addr >> 8) & 0x00ff, mem_addr & 0x00ff, data };
-		return i2c_write_3b(e, buf);
+		ret = i2c_write_3b(e, buf);
+		if (ret == 0 && e->write_cycle_time != 0) {
+			usleep(1000 * e->write_cycle_time);
+		}
+		return ret;
 	}
 	fprintf(stderr, "ERR: unknown eeprom type\n");
 	return -1;
