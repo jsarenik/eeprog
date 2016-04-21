@@ -4,7 +4,7 @@ CFLAGS += -I. -Wall
 all: eeprog
 
 clean:
-	-rm -f eeprog eeprog-static eeprog.o 24cXX.o
+	-rm -fv eeprog eeprog-static eeprog.o 24cXX.o
 
 eeprog: eeprog.o 24cXX.o
 
