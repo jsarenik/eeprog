@@ -35,7 +35,7 @@
 #include <sys/stat.h>
 #include "24cXX.h"
 
-#define VERSION 	"0.7.6-tear12"
+#define VERSION 	"0.7.7-tear12"
 
 #define ENV_DEV		"EEPROG_DEV"
 #define ENV_I2C_ADDR	"EEPROG_I2C_ADDR"
