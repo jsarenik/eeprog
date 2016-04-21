@@ -1,4 +1,5 @@
-CFLAGS=-g -I. -Wall -O2
+CFLAGS ?= -g -O2
+CFLAGS += -I. -Wall
 
 all: eeprog
 
