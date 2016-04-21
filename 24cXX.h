@@ -35,22 +35,22 @@ struct eeprom
  */
 int eeprom_open(char *dev_fqn, int addr, int type, struct eeprom*);
 /*
- * closees the eeprom device [e] 
+ * closees the eeprom device [e]
  */
 int eeprom_close(struct eeprom *e);
 /*
- * read and returns the eeprom byte at memory address [mem_addr] 
- * Note: eeprom must have been selected by ioctl(fd,I2C_SLAVE,address) 
+ * read and returns the eeprom byte at memory address [mem_addr]
+ * Note: eeprom must have been selected by ioctl(fd,I2C_SLAVE,address)
  */
 int eeprom_read_byte(struct eeprom* e, __u16 mem_addr);
 /*
  * read the current byte
- * Note: eeprom must have been selected by ioctl(fd,I2C_SLAVE,address) 
+ * Note: eeprom must have been selected by ioctl(fd,I2C_SLAVE,address)
  */
 int eeprom_read_current_byte(struct eeprom *e);
 /*
- * writes [data] at memory address [mem_addr] 
- * Note: eeprom must have been selected by ioctl(fd,I2C_SLAVE,address) 
+ * writes [data] at memory address [mem_addr]
+ * Note: eeprom must have been selected by ioctl(fd,I2C_SLAVE,address)
  */
 int eeprom_write_byte(struct eeprom *e, __u16 mem_addr, __u8 data);
 
